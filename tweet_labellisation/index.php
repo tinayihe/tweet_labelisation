@@ -6,8 +6,7 @@ and open the template in the editor.
 -->
 
 <?php
-
-$texte_tweet = "texte du tweet";
+include_once "traitement.php";
 
 ?>
 
@@ -27,7 +26,10 @@ $texte_tweet = "texte du tweet";
                     <form action="traitement.php">
                     <table>
                         <p id="tweet_text"><?php
-                        echo $texte_tweet;
+                        $tweet = getTweet();
+                        $tweet_id = $tweet[0];
+                        echo $$tweet[1];
+                        echo '<input type="hidden" name="tweet_id" value='.$tweet_id.' />';
                         ?></p>
                         <!-- 2 c'est Avis positif; 1 c'est Avis neutre; 0 c'est Avis négatif-->
                         <div class="radio">
