@@ -16,40 +16,47 @@ $texte_tweet = "texte du tweet";
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Plateforme de labellisation de tweets</title>
-        <link rel="stylesheet" type="text/css" href="include/bootstrap/css/bootstrap.css>
+        <link rel="stylesheet" type="text/css" href="include/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <h1>Labellisation de tweets</h1>
-
-        <form action="traitement.php">
-
-            <table>
-
-                <tr>
-                    <td>                        
-                        <?php
-                        echo '<input type="text" name="tweet_area" value="$texte_tweet" readonly="readonly" />';
-                        ?>
-                    </td>
-
-                    <td>
-
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8" id="main">
+                    <h1 id="title">Labellisation de tweets</h1>
+                    <form action="traitement.php">
+                    <table>
+                        <p id="tweet_text"><?php
+                        echo $texte_tweet;
+                        ?></p>
                         <!-- 2 c'est Avis positif; 1 c'est Avis neutre; 0 c'est Avis négatif-->
-                        <input type="radio" id="choix" name="choix" value="2" />Avis positif
-                        <input type="radio" id="choix" name="choix" value="1" />Avis neutre
-                        <input type="radio" id="choix" name="choix" value="0" />Avis négatif
-
-                    </td>
-                </tr>
-
-
-            </table>
-
-            <button type="submit"> Envoyer </button> 
-            <button type="reset"> Annuler </button>
-
-        </form>
-
-
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            Avis positif
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked>
+                            Avis neutre
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" checked>
+                            Avis négatif
+                          </label>
+                        </div>
+                    </table>
+                    <div id="buttons">
+                        <button type="submit" class="btn btn-info" id="btn-envoyer"> Envoyer </button>
+                        <button type="reset" class="btn btn-default" id="btn-skip"> Ignorer </button>
+                    </div>
+                    
+                    </form>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
     </body>
 </html>
