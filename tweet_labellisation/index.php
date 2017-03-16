@@ -14,7 +14,7 @@ include_once "traitement.php";
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Plateforme de labellisation de tweets</title>
-        <link rel="stylesheet" type="text/css" href="include/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
