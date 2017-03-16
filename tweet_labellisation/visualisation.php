@@ -5,8 +5,14 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-include_once "traitement.php";
+include_once "db.php";
 $permit = true;
+function getAllTweets() {
+    $db = dbConnect();
+    $state = "SELECT * FROM tweet";
+    $res = $db->query($state, PDO::FETCH_ASSOC)->fetchAll();
+    return $res;
+}
 ?>
 <html>
     <head>

@@ -6,7 +6,33 @@ and open the template in the editor.
 -->
 
 <?php
-include_once "traitement.php";
+include_once "db.php";
+
+if (isset($_REQUEST['tweet_id']) && isset($_REQUEST['optionsRadios'])) {
+    saveResult($_REQUEST['tweet_id'], $_REQUEST['optionsRadios']);
+}
+
+function getTweet() {
+    $db = dbConnect();
+    $state = "SELECT * FROM tweet WHERE `count_label1`+`count_label2`+`count_label3`<5 ORDER BY RAND() LIMIT 1";
+    $res = $db->query($state, PDO::FETCH_ASSOC)->fetchAll();
+    // $res[0]['text'] = maskMention($res[0]['text']);
+    return $res[0];
+}
+
+// function maskMention($text) {
+//  $pattern = "/@\\w+/u";
+//  return preg_replace($pattern, "@xxx", $text);
+// }
+
+function saveResult($id, $optionsRadios) {
+    $db = dbConnect();
+    $count_label = 'count_label'.$optionsRadios;
+    $state = 'UPDATE `tweet` 
+                SET '.$count_label.' = '.$count_label.'+1
+                WHERE id = '.$id.'';
+    $res = $db->query($state);
+}
 ?>
 
 <html>
