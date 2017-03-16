@@ -12,9 +12,6 @@ header('Location: index.php');
 
 // Cette fonction permet de récupérer un tweet à partir d'un dataset (fichier csv)
 // ou d'une base de données SQL
-function getTweetFromDataSetOrDatabase() {
-    // Ecrire le code ici
-}
 
 function getTweet() {
 	$db = dbConnect();
