@@ -7,7 +7,6 @@ and open the template in the editor.
 
 <?php
 include_once "traitement.php";
-
 ?>
 
 <html>
@@ -27,26 +26,26 @@ include_once "traitement.php";
                     <table>
                         <p id="tweet_text"><?php
                         $tweet = getTweet();
-                        $tweet_id = $tweet[0];
-                        echo $$tweet[1];
+                        $tweet_id = $tweet['id'];
+                        echo $tweet['text'];
                         echo '<input type="hidden" name="tweet_id" value='.$tweet_id.' />';
                         ?></p>
                         <!-- 2 c'est Avis positif; 1 c'est Avis neutre; 0 c'est Avis négatif-->
                         <div class="radio">
                           <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" checked>
                             Avis positif
                           </label>
                         </div>
                         <div class="radio">
                           <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="2" checked>
                             Avis neutre
                           </label>
                         </div>
                         <div class="radio">
                           <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" checked>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="3" checked>
                             Avis négatif
                           </label>
                         </div>

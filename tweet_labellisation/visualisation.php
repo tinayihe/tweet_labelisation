@@ -4,6 +4,9 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+include_once "traitement.php";
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -16,10 +19,27 @@ and open the template in the editor.
          <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8" id="main">
-                    <h1>Visualisation des labels des tweets</h1>
-                    <?php
-                    // put your code here
-                    ?>
+                    <h1 id="title">Visualisation des labels des tweets</h1>
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Text de Tweet</th>
+                            <th>Avis positif</th>
+                            <th>Avis neutre</th>
+                            <th>Avis négatif</th>
+                        </tr>
+                        <?php
+                            $tweets = getAllTweets();
+                            foreach ($tweets as $key => $tweet) {
+                                echo '<tr>';
+                                    echo '<th>'.$tweet['text'].'</th>';
+                                    echo '<th>'.$tweet['count_label1'].'</th>';
+                                    echo '<th>'.$tweet['count_label2'].'</th>';
+                                    echo '<th>'.$tweet['count_label3'].'</th>';
+                                echo '</tr>';
+                            }
+                        // put your code here
+                        ?>
+                    </table>
                 </div>
                 <div class="col-md-2"></div>
             </div>
