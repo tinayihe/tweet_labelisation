@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 <?php
 include_once "traitement.php";
+$permit = true;
 ?>
 <html>
     <head>
@@ -28,14 +29,16 @@ include_once "traitement.php";
                             <th>Avis négatif</th>
                         </tr>
                         <?php
-                            $tweets = getAllTweets();
-                            foreach ($tweets as $key => $tweet) {
-                                echo '<tr>';
-                                    echo '<th>'.$tweet['text'].'</th>';
-                                    echo '<th>'.$tweet['count_label1'].'</th>';
-                                    echo '<th>'.$tweet['count_label2'].'</th>';
-                                    echo '<th>'.$tweet['count_label3'].'</th>';
-                                echo '</tr>';
+                            if ($permit) {
+                                $tweets = getAllTweets();
+                                foreach ($tweets as $key => $tweet) {
+                                    echo '<tr>';
+                                        echo '<th>'.$tweet['text'].'</th>';
+                                        echo '<th>'.$tweet['count_label1'].'</th>';
+                                        echo '<th>'.$tweet['count_label2'].'</th>';
+                                        echo '<th>'.$tweet['count_label3'].'</th>';
+                                    echo '</tr>';
+                                }
                             }
                         // put your code here
                         ?>

@@ -22,6 +22,7 @@ include_once "traitement.php";
                 <div class="col-md-2"></div>
                 <div class="col-md-8" id="main">
                     <h1 id="title">Labellisation de tweets</h1>
+                    
                     <form action="traitement.php">
                     <table>
                         <p id="tweet_text"><?php
@@ -57,7 +58,9 @@ include_once "traitement.php";
                     
                     </form>
                 </div>
-                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <a class="btn btn-default" id="link-visualisation" href="visualisation.php" role="button">Visualisation</a>
+                </div>
             </div>
     </body>
 </html>

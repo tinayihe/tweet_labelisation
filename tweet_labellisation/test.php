@@ -11,7 +11,7 @@ function getTweetFromCSVDataSet($column_tweetId, $column_tweetText, $filename) {
     while ($tab = fgetcsv($fichier, 1024, ';')) {
         $res = insertTweet($tab[$column_tweetId], $tab[$column_tweetText]);
         if ($res) {
-        	echo "Insert the tweet ".$tab[$column_tweetText]. "with succes. </br>";
+        	echo "Insert the tweet ".$tab[$column_tweetText]. " with succes. </br>";
         } else {
         	echo "Failed to insert the tweet ".$tab[$column_tweetText] ."</br>";
         }

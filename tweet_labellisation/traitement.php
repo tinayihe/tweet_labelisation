@@ -15,16 +15,16 @@ header('Location: index.php');
 
 function getTweet() {
 	$db = dbConnect();
-	$state = "SELECT * FROM tweet WHERE `count_label1`+`count_label2`+`count_label3`<=5 ORDER BY RAND() LIMIT 1";
+	$state = "SELECT * FROM tweet WHERE `count_label1`+`count_label2`+`count_label3`<5 ORDER BY RAND() LIMIT 1";
 	$res = $db->query($state, PDO::FETCH_ASSOC)->fetchAll();
-	$res[0]['text'] = maskMention($res[0]['text']);
+	// $res[0]['text'] = maskMention($res[0]['text']);
 	return $res[0];
 }
 
-function maskMention($text) {
-	$pattern = "/@\\w+/u";
-	return preg_replace($pattern, "@xxx", $text);
-}
+// function maskMention($text) {
+// 	$pattern = "/@\\w+/u";
+// 	return preg_replace($pattern, "@xxx", $text);
+// }
 
 function saveResult($id, $optionsRadios) {
 	$db = dbConnect();
