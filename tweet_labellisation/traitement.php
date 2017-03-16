@@ -1,5 +1,5 @@
 <?php
-
+include_once "db.php";
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -40,14 +40,6 @@ function getAllTweets() {
 	$state = "SELECT * FROM tweet";
 	$res = $db->query($state, PDO::FETCH_ASSOC)->fetchAll();
 	return $res;
-}
-
-function dbConnect() {
-	$dsn = "mysql:host=127.0.0.1;port=3306;dbname=tweet_labelisation";
-	$username = "root";
-	$password = "root";
-	$db = new PDO($dsn, $username, $password);
-	return $db;
 }
 
 ?>

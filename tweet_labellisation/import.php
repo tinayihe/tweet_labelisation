@@ -1,4 +1,6 @@
 <?php
+include_once "db.php";
+
 $filename = "test.csv";
 $column_tweetId = 2;
 $column_tweetText = 0;
@@ -23,12 +25,4 @@ function insertTweet($tweet_id, $tweet_text) {
 	$state = "INSERT INTO `tweet`(`id_tweet`, `text`) VALUES ('".$tweet_id."','".$tweet_text."')";
 	$res = $db->exec($state);
 	return $res;
-}
-
-function dbConnect() {
-	$dsn = "mysql:host=127.0.0.1;port=3306;dbname=tweet_labelisation";
-	$username = "root";
-	$password = "root";
-	$db = new PDO($dsn, $username, $password);
-	return $db;
 }
