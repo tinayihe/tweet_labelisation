@@ -49,7 +49,7 @@ function saveResult($id, $optionsRadios) {
                 <div class="col-md-8" id="main">
                     <h1 id="title">Labellisation de tweets</h1>
                     
-                    <form action="traitement.php">
+                    <form>
                     <table>
                         <p id="tweet_text"><?php
                         $tweet = getTweet();
