@@ -31,7 +31,7 @@ $tweet = read_tweet_randomly();
     <body id="body-index">
         <div id="container-main">
             <p class="lead" id="intro-cours">IF25 - Data mining pour les réseaux sociaux</p>
-            <h1>Labellisation de tweets</h1>
+            <h1 id="h1-index">Labellisation de tweets</h1>
             <p class="intro">Le principe:</p>
             <p class="intro">Cette plateforme a pour but de réaliser un sondage sur les contenus des tweets.
                 Ce sondage nous aidera dans notre projet à réaliser une étude se rapportant 
@@ -43,7 +43,6 @@ $tweet = read_tweet_randomly();
                 <form method="post" action="#">
                     <table>
                         <fieldset>
-                            <!-- <legend>Tweet</legend> -->
 
                             <div id="tweet_content">
                                 <p>
@@ -91,10 +90,10 @@ $tweet = read_tweet_randomly();
 
                         echo '<div id="button_submit">';
                         echo '<button type="submit" class="btn btn-info" id="btn-envoyer">Valider</button>';
-                        echo '</div>';
                     }
                     ?>
-
+                    <button type="button" class="btn btn-default" id="button-exit">Exit</button>
+                    </div>
                 </form>
                 <p>Tweet's labellisation rate:</p>
                 <div class="progress">

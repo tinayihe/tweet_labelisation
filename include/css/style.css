@@ -9,6 +9,7 @@
 #body-index {
     height: 50%;
     background: url(../image/intro-bg.jpg) no-repeat center center;
+    /*background: url(../image/7096.svg) no-repeat center center;*/
     background-size: cover;
 }
 
@@ -64,4 +65,8 @@ fieldset legend{
     margin-top: 2em;
     margin-bottom: 2em;
     text-align: center;
+}
+
+#button-exit {
+    
 }
