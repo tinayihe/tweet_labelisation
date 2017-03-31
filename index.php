@@ -30,12 +30,13 @@ $tweet = read_tweet_randomly();
 
     <body id="body-index">
         <div id="container-main">
-            <p class="lead" id="intro-cours">IF25 - Data mining pour les réseaux sociaux</p>
-            <h1 id="h1-index">Labellisation de tweets</h1>
+            <p class="lead" id="intro-cours">IF25 - Data mining pour les réseaux sociaux - Université de Technologie de Troyes (UTT)</p>
+            <h1 id="h1-index">Plateforme CrowdLabel</h1>
             <p class="intro">Le principe:</p>
-            <p class="intro">Cette plateforme a pour but de réaliser un sondage sur les contenus des tweets.
-                Ce sondage nous aidera dans notre projet à réaliser une étude se rapportant 
-                à l'approche supervisée des graphes de contenus sur les réseaux sociaux.</p>
+            <p class="intro">Cette plateforme a pour but de réaliser un sondage sur le sentiment que véhicule le contenu des messages postés sur Twitter. Chaque message contient 140 caractère et permet de se prononcer plus facilement.</p>
+            <p class="intro">La finalité de notre projet est d'arriver à labelliser une nombre suffisant de tweets pour nous permettre de faire notre projet de classification de données dans le cadre d' l'UV IF25.</p>
+            <p class="intro">Le travaille ne pouvant pas être fait efficacement par quelques étudiants, nous faisons appel à vous pour nous aider.</p>
+            <p class="intro">NB. Donnez votre avis sur le sentiment que véhicule le contenu et non sur le sentiment qu'il provoque chez vous.</p>
             <p class="intro">Nous vous remercions sincèrement pour votre participation.</p>
 
             <div id="div_main" class="container">

@@ -9,18 +9,17 @@
 #body-index {
     height: 50%;
     background: url(../image/intro-bg.jpg) no-repeat center center;
-    /*background: url(../image/7096.svg) no-repeat center center;*/
     background-size: cover;
 }
 
 p {
     color:white;
+    font-size: 1.1em;
 }
 
-h1 {
+#h1-index {
     text-align: center;
-    padding-top: 1em;
-    margin-top: 0;
+    margin-top: 1em;
     font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
     color: white;
@@ -29,10 +28,6 @@ h1 {
 .intro {
     padding-left: 5vh;
     padding-right: 5vh;
-}
-
-#div_main {
-    margin-top: 3em;
 }
 
 fieldset{
@@ -44,13 +39,10 @@ fieldset legend{
     text-align: center;
 }
 
-#le-tweet {
-}
-
 #tweet_content {
     text-align: center;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 1em;
+    font-family: 'Calibri';
+    /*font-size: 1em;*/
     padding: 1em 2em 1em 2em;
     background-color: rgba(255,255,255, 0.3);
     border-radius: 1vh;
@@ -59,14 +51,11 @@ fieldset legend{
 #div_radio {
     color: white;
     text-align: center;
+    font-size: 1.1em;
 }
 
 #button_submit {
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
     text-align: center;
-}
-
-#button-exit {
-    
 }
