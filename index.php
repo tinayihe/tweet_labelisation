@@ -31,6 +31,7 @@ $tweet = read_tweet_randomly();
 
 
     <body id="body-index">
+ 
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -43,8 +44,9 @@ $tweet = read_tweet_randomly();
         
         <div id="container-main">
             <p class="lead" id="intro-cours">IF25 - Data mining pour les réseaux sociaux - Université de Technologie de Troyes (UTT)</p>
+                   <div class="container" id="op">
             <h1 id="h1-index">Plateforme CrowdLabel</h1>
-            <p class="intro">Le principe:</p>
+            <!--<p class="intro">Le principe:</p>-->
             <p class="intro">Cette plateforme a pour but de réaliser un sondage sur le sentiment que véhicule le contenu des messages postés sur Twitter. Chaque message contient 140 caractère et permet de se prononcer plus facilement.</p>
             <p class="intro">La finalité de notre projet est d'arriver à labelliser une nombre suffisant de tweets pour nous permettre de faire notre projet de classification de données dans le cadre d' l'UV IF25.</p>
             <p class="intro">Le travaille ne pouvant pas être fait efficacement par quelques étudiants, nous faisons appel à vous pour nous aider.</p>
@@ -52,12 +54,13 @@ $tweet = read_tweet_randomly();
             <p class="intro">Nous vous remercions sincèrement pour votre participation.</p>
 
             <div id="div_main" class="container">
-            <p id="le-tweet">Le tweet:</p>
+            <!--<p id="le-tweet">Le tweet:</p>-->
                 <form method="post" action="#">
                     <table>
                         <fieldset>
 
                             <div id="tweet_content">
+                                <img src="include/image/Twitter-2-icon.png" alt="Partager sur Linkedin"/></a> 
                                 <p>
                                     <?php
                                     if ($tweet != NULL) {
@@ -71,41 +74,44 @@ $tweet = read_tweet_randomly();
                             </div>
                         </fieldset>
 
-                        <p id="le-tweet">est: </p>
+                        <!--<p id="le-tweet">est: </p>-->
 
                         <div id="div_radio">
-                            <div class="radio">
+                           
 
                                 <input type="radio" 
                                        name="option_radio" 
                                        id="option_radio_positif" 
-                                       value="positif"/>Avis positif   
-                            </div>
-                            <div class="radio">
+                                       value="positif"
+                                       /><span>Avis positif</span>  &nbsp;&nbsp;&nbsp;&nbsp; 
+                           
+                           
                                 <input type="radio" 
                                        name="option_radio" 
                                        id="option_radio_neutre" 
-                                       value="neutre"/>Avis neutre
-                            </div>
-                            <div class="radio">
+                                       value="neutre"
+                                       /><span>Avis neutre</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                          
+                         
                                 <input type="radio" 
                                        name="option_radio" 
                                        id="option_radio_negatif" 
-                                       value="negatif"/>Avis négatif
+                                       value="negatif"/><span>Avis négatif</span>
 
-                            </div>
+                            
                         </div>
 
-                    </table>
+                    
 
                     <?php
                     if ($tweet != NULL) {
 
                         echo '<div id="button_submit">';
-                        echo '<button type="submit" class="btn btn-info" id="btn-envoyer">Valider</button>';
+                        echo '<button type="submit" class="btn btn-info" id="btn-envoyer"><b>Valider</b></button>';
                     }
                     ?>
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Exit</button>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg"><b>Exit</b></button>
+                    
                     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                       <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -139,16 +145,16 @@ $tweet = read_tweet_randomly();
                         </div>
                       </div>
                     </div>
-                    </div>
                 </form>
             
-                <p>Tweet's labellisation rate:</p>
+                <p style="margin-top:10px">Tweet's labellisation rate:</p>
                 <div class="progress">
                   <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">
                     35%
                   </div>
                 </div>
-            </div>                
+            </div>   
+            </div>
         </div> 
    
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
