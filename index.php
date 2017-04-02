@@ -60,7 +60,7 @@ $tweet = read_tweet_randomly();
                         <fieldset>
 
                             <div id="tweet_content">
-                                <img src="include/image/Twitter-2-icon.png" alt="Partager sur Linkedin"/></a> 
+                                <img src="include/image/Twitter-2-icon.png" alt="tweet content"/>
                                 <p>
                                     <?php
                                     if ($tweet != NULL) {
@@ -119,27 +119,27 @@ $tweet = read_tweet_randomly();
                             <h4> Bravo! Nous vous remercions d'avoir contribué à notre projet<br/><br/>
                             Aidez-nous à recueillir plus de données en partageant ce sondage avec vos amis sur les réseaux sociaux</h4>
                             <!-- fb button share -->
-                            <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" data-layout="button_count%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" data-layout="button_count" data-mobile-iframe="true" onclick="javascript:window.open(this.href,
+                            <a title="Partager sur Facebook" class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" data-layout="button_count%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" data-layout="button_count" data-mobile-iframe="true" onclick="javascript:window.open(this.href,
                           '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="icon-rs"
                           src="include/image/fb-icon.png" alt="Partager sur Facebook"/></a>
                             
                            
                             
                             <!-- twitter button share -->
-                            <a href="https://twitter.com/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html"  target="_blank" data-show-count="true" onclick="javascript:window.open(this.href,
+                            <a title="Partager sur Twitter" href="https://twitter.com/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html"  target="_blank" data-show-count="true" onclick="javascript:window.open(this.href,
                           '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="icon-rs"
                           src="include/image/twitter-iconn.png" alt="Tweet"/></a>
                             
                            
                             <!-- google+ button share -->
-                            <a style="color:white" href="https://plus.google.com/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" onclick="javascript:window.open(this.href,
+                            <a title="Partager sur Google+" href="https://plus.google.com/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" onclick="javascript:window.open(this.href,
                           '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="icon-rs"
                           src="include/image/google-plus-icon1.png" alt="Partager sur Google+"/>
                                 </a>
                           
                           <!-- linkedin button share -->  
                           <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: fr_FR</script>
-                        <a href="https://linkedin.com/cws/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" data-link="https://linkedin.com/cws/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" target="_blank"  onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="icon-rs" src="include/image/linkedin-icon.png" alt="Partager sur Linkedin"/></a>  
+                        <a title="Partager sur Linkedin" href="https://linkedin.com/cws/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" data-link="https://linkedin.com/cws/share?url=http://exed.utt.fr/fr/formations-diplomantes/mastere-specialise/mastere-specialise-expert-big-data-analytics-metriques.html" target="_blank"  onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="icon-rs" src="include/image/linkedin-icon.png" alt="Partager sur Linkedin"/></a>  
                             
                             
                         </div>
@@ -148,7 +148,7 @@ $tweet = read_tweet_randomly();
                 </form>
             
                 <p style="margin-top:10px">Tweet's labellisation rate:</p>
-                <div class="progress">
+                <div class="progress" style="margin-right:25px">
                   <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">
                     35%
                   </div>

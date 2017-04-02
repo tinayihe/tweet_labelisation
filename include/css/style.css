@@ -43,8 +43,9 @@ fieldset legend{
     text-align: center;
     font-family: 'Calibri';
     font-size: 1.3em;
+    margin-right: 25px;
     padding: 1em 2em 1em 2em;
-    background-color: rgba(66, 238, 244, 0.3);
+    background-color: rgba(66, 238, 244, 0.4);
     border-radius: 1vh;
 }
 
