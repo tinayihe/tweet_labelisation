@@ -5,93 +5,74 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//On définit les labels
+define('POSITIF', '1');
+define('NEUTRE', '2');
+define('IRONIQUE', '3');
+define('NEGATIF', '4');
+
+//On définit les éléments de connexion à la base de données
+define('HOST', 'localhost');
+define('PORT', '3306');
+define('DBNAME', 'debat');
+define('TABLENAME', 'tweet');
+define('USER', 'root');
+define('PASS', '');
+
 //On stocke une connexion persistante dans la variable db
 $connection = db_connect();
 
 //Paramètres de connexion à la base de données
 function db_connect() {
-    $dsn = "mysql:host=localhost;port=3306;dbname=tweet_labellisation";
-    $user = "root";
-    $pass = "root";
-    return new PDO($dsn, $user, $pass, array(
+    $dsn = "mysql:host=".HOST.";port=".PORT.";dbname=".DBNAME;
+    return new PDO($dsn, USER, PASS, array(
         PDO::ATTR_PERSISTENT => true
     ));
 }
 
-function populate_sql_from_csv($column_original_id, $column_tweet_content, $filename) {
-    $not_inserted = 0;
-    // Filename must be with extension (like "file.csv" for example)
-    $fichier = fopen($filename, "a+");
-    while ($tab = fgetcsv($fichier, 1024, ';')) {
-        $res = create_tweet($tab[$column_original_id], $tab[$column_tweet_content]);
-        if (!$res) {
-            $not_inserted = $not_inserted + 1;
-        }
-    }
-    return $not_inserted;
-}
-
-function populate_sql_from_json($filename) {
-    global $connection;
-    $not_inserted_array = [];
-    // Filename must be with extension (like "file.json" for example)
-    $json_source = file_get_contents($filename);
-    //Décodage du JSON et récupération dans un tableau
-    $json_data = json_decode($json_source, TRUE);
-    //Insertion dans la base de données SQL
-    foreach ($json_data as $tweet) {
-        $state = "INSERT INTO `tweet` (`original_id`, `tweet_content`) "
-                . "VALUES ('" . $tweet['id'] . "','" . $tweet['content'] . "')";
-        $res = $connection->exec($state);
-        //Sauvegarde du tuple JSON dans un tableau si non inséré
-        if (!$res) {
-            $not_inserted_array[] = $tweet;
-        }
-    }
-    return $not_inserted_array;
-}
-
-function create_tweet($original_id, $tweet_content) {
-    global $connection;
-    $state = "INSERT INTO `tweet` (`original_id`, `tweet_content`) "
-            . "VALUES ('" . $original_id . "','" . $tweet_content . "')";
-    $res = $connection->exec($state);
-    return $res;
-}
-
 function read_tweet_randomly() {
+    $user_id = read_user_id_randomly();
+    $tweet = read_tweet_randomly_by_user_id($user_id);
+    return $tweet;
+}
+
+function read_user_id_randomly() {
     global $connection;
-    $state = "SELECT * FROM tweet "
-            . "WHERE `count_positif`+`count_neutre`+`count_negatif`<5 "
-            . "ORDER BY RAND() LIMIT 1";
+    $state = 'SELECT DISTINCT user_id FROM `' . TABLENAME . '` WHERE `isRetweet` = 0 AND LENGTH(`label`) < 5';
+    // $state = 'SELECT DISTINCT user_id FROM `' . TABLENAME . '` WHERE LENGTH(`label`) < 5';
     $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
-//    $res[0]['tweet_content'] = tweet_content_anonymizer($res[0]['text']);
+    return $res[array_rand($res)]['user_id'];
+}
+
+function read_tweet_randomly_by_user_id($user_id) {
+    global $connection;
+    $state = "SELECT * FROM " . TABLENAME
+        . " WHERE `user_id` = " . $user_id
+        . " AND LENGTH(`label`) < 5 AND `isRetweet` = 0"
+        . " ORDER BY RAND() LIMIT 1";
+
+/*    $state = "SELECT * FROM " . TABLENAME
+            . " WHERE `user_id` = " . $user_id
+            . " AND LENGTH(`label`) < 5"
+            . " ORDER BY RAND() LIMIT 1";*/
+    $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
     if (sizeof($res) != 0) {
-        return $res;
+        return $res[0];
     }
     return NULL;
 }
 
-function read_user_id_randomly() {
-    
-}
-
-function read_tweet_randomly_by_user_id($user_id) {
-    
-}
-
-function read_all_tweets() {
+function read_all_tweets($page) {
     global $connection;
-    $state = "SELECT * FROM tweet";
+    $state = "SELECT * FROM " . TABLENAME . " WHERE LENGTH(`label`) > 0 LIMIT ".(50*($page-1)).", ". (50*$page);
+    // $state = "SELECT * FROM " . TABLENAME . " WHERE `isRetweet` = 0 LIMIT ".(50*($page-1)).", ". (50*$page);
     $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
     return $res;
 }
 
-function update_tweet_labels($tweet_id, $option_radio) {
+function update_tweet_labels($mysql_id, $label) {
     global $connection;
-    $count_label = 'count_' . $option_radio;
-    $state = 'UPDATE `tweet` SET ' . $count_label . ' = ' . $count_label . '+1 '
-            . 'WHERE id = ' . $tweet_id . '';
+    $state = 'UPDATE ' . TABLENAME . ' SET  `label` = "' . $label . '" WHERE mysql_id = ' . $mysql_id;
     $connection->query($state);
 }
 
@@ -100,11 +81,67 @@ function tweet_content_anonymizer($tweet_content) {
     return preg_replace($pattern, "@xxx", $tweet_content);
 }
 
-function tendance($tweet) {
-    $tableau_compte_avis = [$tweet['count_positif'], $tweet['count_neutre'], $tweet['count_negatif']];
-    $indice = array_search(max($tableau_compte_avis), $tableau_compte_avis);
-    $tableau_tendances = ['POSITIF', 'NEUTRE', 'NEGATIF'];
-    return $tableau_tendances[$indice];
+function tendance_globale($tweet) {
+    $tendance = 'PAS DE TENDANCE MARQUEE';
+    if ($tweet['label'] != NULL && strlen($tweet['label']) != 0) {
+        $tableau_labels = str_split($tweet['label']);
+        $tableau_occurences = array_count_values($tableau_labels);
+        for ($i=1; $i < 5 ; $i++) { 
+            if (!isset($tableau_occurences[$i])) {
+                $tableau_occurences[$i] = 0;
+            }
+        }
+        $tableau_cles = array_keys($tableau_occurences);
+        $tableau_valeurs = array_values($tableau_occurences);
+        $indice = array_search(max($tableau_valeurs), $tableau_valeurs);
+
+        switch ($tableau_cles[$indice]) {
+            case POSITIF:
+                $tendance = 'POSITIF';
+                break;
+            case NEUTRE:
+                $tendance = 'NEUTRE  ';
+                break;
+            case IRONIQUE:
+                $tendance = 'IRONIQUE';
+                break;
+            case NEGATIF:
+                $tendance = 'NEGATIF';
+                break;
+            default:
+                $tendance = 'PAS DE TENDANCE MARQUEE';
+                break;
+        }
+    }
+    $result = [
+        '1' => $tendance,
+        '2' => $tableau_occurences
+    ];
+    return $result;
+}
+
+function getTotalPage() {
+    global $connection;
+    $state = "SELECT COUNT(*) AS `count` FROM " . TABLENAME . " WHERE LENGTH(`label`) > 0";
+    // $state = "SELECT COUNT(*) AS `count` FROM " . TABLENAME . " WHERE `isRetweet` = 0";
+    $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
+    return $res[0]['count'];
+}
+
+function count_all_tweets() {
+    global $connection;
+    $state = "SELECT count(*) as nb FROM `" . TABLENAME . "` WHERE `isRetweet` = 0";
+    $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
+    return $res[0]['nb'];
+}
+
+function proportion_tweets_labellises() {
+    global $connection;
+    $state = "SELECT count(*) as nb_labellise FROM `" . TABLENAME . "` WHERE `isRetweet` = 0 AND LENGTH(label) = 5";
+    $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
+    $nb_labellise = $res[0]['nb_labellise'];
+
+    return round($nb_labellise / count_all_tweets());
 }
 
 ?>

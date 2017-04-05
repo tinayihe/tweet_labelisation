@@ -6,6 +6,8 @@ and open the template in the editor.
 -->
 <?php
 include './config/config.php';
+
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
 ?>
 
 <html>
@@ -28,25 +30,71 @@ include './config/config.php';
                 <tr>
                     <th>Tweet</th>
                     <th>Tendance</th>
-                    <td>Avis positif</td>
-                    <td>Avis neutre</td>
-                    <td>Avis négatif</td>
+                    <td>Positif</td>
+                    <td>Neutre</td>
+                    <td>Ironique</td>
+                    <td>Négatif</td>
                 </tr>
                 <?php
-                $tweets = read_all_tweets();
+                $tweets = read_all_tweets($page);
                 foreach ($tweets as $key => $tweet) {
                     echo '<tr>';
-                    echo '<td>' . $tweet['tweet_content'] . '</td>';
-                    echo '<th>' . tendance($tweet) . '</th>';
-                    echo '<td>' . $tweet['count_positif'] . '</td>';
-                    echo '<td>' . $tweet['count_neutre'] . '</td>';
-                    echo '<td>' . $tweet['count_negatif'] . '</td>';
+                    echo '<td>' . $tweet['Text'] . '</td>';
+                    $tendance_globale = tendance_globale($tweet);
+                    echo '<th>' . $tendance_globale['1'] . '</th>';
+                    $tendance_details = $tendance_globale['2'];
+                    echo '<td>' . $tendance_details['1'] . '</td>';
+                    echo '<td>' . $tendance_details['2'] . '</td>';
+                    echo '<td>' . $tendance_details['3'] . '</td>';
+                    echo '<td>' . $tendance_details['4'] . '</td>';
                     echo '</tr>';
                 }
                 ?>
             </table>
-
         </div>
 
+        <div id="pagination">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="active"><a href="?page=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                    <li class="active"><a href="?page=<?= $page > 1 ? $page-1 : 1?>" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>
+                    <?php
+                        $totalPages = ceil(intval(getTotalPage()) / 50);
+                        if ($totalPages <= 3) {
+                            for ($i=1; $i <= $page; $i++) { 
+                                echo '<li class="active"><a href="?page='.$i.'">'.$i.' <span class="sr-only">(current)</span></a></li>';
+                            }
+                        } else {
+                            echo '<li class="active"><a href="?page=1" aria-label="Previous"><span aria-hidden="true">1</span></a></li>';
+                            if ($page <= 3) {
+                            for ($i=2; $i <= $page + 1; $i++) { 
+                                echo '<li class="active"><a href="?page='.$i.'">'.$i.' <span class="sr-only">(current)</span></a></li>';
+                            }
+                                echo '<li class="active"><span>......</span></li>';
+                            } elseif ($page >= $totalPages - 2 && $page < $totalPages) {
+                                echo '<li class="active"><span>......</span></li>';
+                                for ($i=$page - 1; $i <= $totalPages - 1; $i++) { 
+                                    echo '<li class="active"><a href="?page='.$i.'">'.$i.' <span class="sr-only">(current)</span></a></li>';
+                                }
+                            } elseif ($page == $totalPages) {
+                                $i = $totalPages - 1;
+                                echo '<li class="active"><span>......</span></li>';
+                                echo '<li class="active"><a href="?page='.$i.'">'.$i.' <span class="sr-only">(current)</span></a></li>';
+                            } else {
+                                echo '<li class="active"><span>......</span></li>';
+                                for ($i=$page - 1; $i <= $page + 1; $i++) { 
+                                    echo '<li class="active"><a href="?page='.$i.'">'.$i.' <span class="sr-only">(current)</span></a></li>';
+                                }
+                                echo '<li class="active"><span>......</span></li>';
+                            }
+                            echo '<li class="active"><a href="?page='.$totalPages.'">'.$totalPages.' <span class="sr-only">(current)</span></a></li>';
+                        }
+                        $next = $page<$totalPages ? $page +1 : $totalPages;
+                        echo '<li class="active"><a href="?page='.$next.'" aria-label="Previous"><span aria-hidden="true">&gt;</span></a></li>';
+                        echo '<li class="active"><a href="?page='.$totalPages.'" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>';
+                    ?>
+                </ul>
+            </nav>
+        </div>
     </body>
 </html>
