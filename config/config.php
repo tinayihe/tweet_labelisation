@@ -17,7 +17,7 @@ define('PORT', '3306');
 define('DBNAME', 'debat');
 define('TABLENAME', 'tweet');
 define('USER', 'root');
-define('PASS', '');
+define('PASS', 'root');
 
 //On stocke une connexion persistante dans la variable db
 $connection = db_connect();
