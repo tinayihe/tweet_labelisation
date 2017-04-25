@@ -6,8 +6,17 @@ and open the template in the editor.
 -->
 <?php
 include './config/config.php';
-
+$access = false;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
+if (isset($_POST['pwd'])) {
+    $access = checkPassword($_POST['pwd']);
+    if (!$access) {
+         echo '<script type="text/javascript">',
+              'alert("Password is not valid!");',
+              '</script>'
+         ;
+    }
+}
 ?>
 
 <html>
@@ -15,12 +24,24 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Visualisation des labels des tweets</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" 
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="include/css/style.css">
     </head>
     <body>
-
+<?php if (!$access): ?>
+        <div id="password">
+            <form class="form-inline" method="POST" action="#">
+              <div class="form-group">
+                <label for="exampleInputName2">Entry Code:</label>
+                <input type="password" class="form-control" id="pwd" name="pwd">
+              </div>
+              <button type="submit" class="btn btn-default">Valid</button>
+            </form>
+        </div>
+<?php else: ?>
         <h1>Tendances des tweets</h1>
 
         <div id="div_main">
@@ -96,5 +117,6 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
                 </ul>
             </nav>
         </div>
+<?php endif; ?>
     </body>
 </html>

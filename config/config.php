@@ -19,6 +19,8 @@ define('TABLENAME', 'tweet');
 define('USER', 'root');
 define('PASS', 'root');
 
+define('PASSWORD_ENCODED', '907178e3bdbb2570ec5fd61e84f28af0addf7eef4759de1525d96a94510458bf');
+
 //On stocke une connexion persistante dans la variable db
 $connection = db_connect();
 
@@ -73,7 +75,7 @@ function read_all_tweets($page) {
 function update_tweet_labels($mysql_id, $label) {
     global $connection;
     $state = 'UPDATE ' . TABLENAME . ' SET  `label` = "' . $label . '" WHERE mysql_id = ' . $mysql_id;
-    $connection->query($state);
+    $result = $connection->query($state);
 }
 
 function tweet_content_anonymizer($tweet_content) {
@@ -144,4 +146,7 @@ function proportion_tweets_labellises() {
     return round($nb_labellise / count_all_tweets());
 }
 
+function checkPassword($pwd) {
+    return hash('sha256', $pwd) == PASSWORD_ENCODED;
+}
 ?>

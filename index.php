@@ -6,12 +6,34 @@ and open the template in the editor.
 -->
 
 <?php
+session_start();
 include './config/config.php';
 
-if (isset($_POST['mysql_id']) && isset($_POST['option_radio'])) {
+if (isset($_POST['g-recaptcha-response'])) {
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    $data = array(
+        'secret' => '6LcNsh4UAAAAANNzZ4IA9dKPwYQOFhWpw3b7Y0NK',
+        'response' => $_POST['g-recaptcha-response']
+    );
+
+    // use key 'http' even if you send the request to https://...
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = json_decode(file_get_contents($url, false, $context));
+    if ($result->success === true) {
+        $_SESSION['is-humain'] = true;
+    }
+}
+
+if (isset($_SESSION['is-humain']) && $_SESSION['is-humain'] && isset($_POST['mysql_id']) && isset($_POST['option_radio'])) {
     $new_label = $_POST['label'] . $_POST['option_radio'];
     update_tweet_labels($_POST['mysql_id'], $new_label);
-    // update_tweet_labels($_POST['tweet_id'], $_POST['option_radio']);
 }
 
 $tweet = read_tweet_randomly();
@@ -25,12 +47,12 @@ $tweet = read_tweet_randomly();
         <title>Plateforme de labellisation pour la classification de tweets</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
         <link rel="stylesheet" type="text/css" 
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="include/css/style.css">
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     </head>
-
 
     <body id="body-index">
         <div id="container-main">
@@ -133,6 +155,9 @@ $tweet = read_tweet_randomly();
                       </div>
                     </div>
                 </form>
+                <?php if (!isset($_SESSION['is-humain']) || !$_SESSION['is-humain']): ?>
+                <div class="g-recaptcha" data-sitekey="6LcNsh4UAAAAAB9ByQiskFKMbbWBjFgUYu2x5dtZ"></div>
+                <?php endif; ?>
                 <p style="margin-top:10px">Tweet's labellisation rate:</p>
                 <div class="progress">
                     <?php
