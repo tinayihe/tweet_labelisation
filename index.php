@@ -9,6 +9,10 @@ and open the template in the editor.
 session_start();
 include './config/config.php';
 
+function isHumain() {
+    return isset($_SESSION['is-humain']) && $_SESSION['is-humain'];
+}
+
 if (isset($_POST['g-recaptcha-response'])) {
     $url = 'https://www.google.com/recaptcha/api/siteverify';
     $data = array(
@@ -28,15 +32,25 @@ if (isset($_POST['g-recaptcha-response'])) {
     $result = json_decode(file_get_contents($url, false, $context));
     if ($result->success === true) {
         $_SESSION['is-humain'] = true;
+    } else {
+        echo '<script type="text/javascript">',
+              'alert("Please enter the correct captcha!");',
+              '</script>'
+        ;
     }
 }
 
-if (isset($_SESSION['is-humain']) && $_SESSION['is-humain'] && isset($_POST['mysql_id']) && isset($_POST['option_radio'])) {
+if (isHumain() && isset($_POST['mysql_id']) && isset($_POST['option_radio'])) {
     $new_label = $_POST['label'] . $_POST['option_radio'];
     update_tweet_labels($_POST['mysql_id'], $new_label);
 }
 
-$tweet = read_tweet_randomly();
+if (isHumain() || !isset($_SESSION['tweet'])) {
+    $tweet = read_tweet_randomly();
+    $_SESSION['tweet'] = $tweet;
+} else {
+    $tweet = $_SESSION['tweet'];
+}
 ?>
 
 <html>
@@ -156,7 +170,7 @@ $tweet = read_tweet_randomly();
                     </div>
                 </form>
                 <?php if (!isset($_SESSION['is-humain']) || !$_SESSION['is-humain']): ?>
-                <div class="g-recaptcha" data-sitekey="6LcNsh4UAAAAAB9ByQiskFKMbbWBjFgUYu2x5dtZ"></div>
+                    <div class="g-recaptcha" data-sitekey="6LcNsh4UAAAAAB9ByQiskFKMbbWBjFgUYu2x5dtZ"></div>
                 <?php endif; ?>
                 <p style="margin-top:10px">Tweet's labellisation rate:</p>
                 <div class="progress">
