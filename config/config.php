@@ -40,23 +40,23 @@ function read_tweet_randomly() {
 
 function read_user_id_randomly() {
     global $connection;
-    $state = 'SELECT DISTINCT user_id FROM `' . TABLENAME . '` WHERE `isRetweet` = 0 AND LENGTH(`label`) < 5';
-    // $state = 'SELECT DISTINCT user_id FROM `' . TABLENAME . '` WHERE LENGTH(`label`) < 5';
+    // $state = 'SELECT DISTINCT user_id FROM `' . TABLENAME . '` WHERE `isRetweet` = 0 AND LENGTH(`label`) < 5';
+    $state = 'SELECT DISTINCT user_id FROM `' . TABLENAME . '` WHERE LENGTH(`label`) < 5';
     $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
     return $res[array_rand($res)]['user_id'];
 }
 
 function read_tweet_randomly_by_user_id($user_id) {
     global $connection;
-    $state = "SELECT * FROM " . TABLENAME
-        . " WHERE `user_id` = " . $user_id
-        . " AND LENGTH(`label`) < 5 AND `isRetweet` = 0"
-        . " ORDER BY RAND() LIMIT 1";
+    // $state = "SELECT * FROM " . TABLENAME
+    //     . " WHERE `user_id` = " . $user_id
+    //     . " AND LENGTH(`label`) < 5 AND `isRetweet` = 0"
+    //     . " ORDER BY RAND() LIMIT 1";
 
-/*    $state = "SELECT * FROM " . TABLENAME
+    $state = "SELECT * FROM " . TABLENAME
             . " WHERE `user_id` = " . $user_id
             . " AND LENGTH(`label`) < 5"
-            . " ORDER BY RAND() LIMIT 1";*/
+            . " ORDER BY RAND() LIMIT 1";
     $res = $connection->query($state, PDO::FETCH_ASSOC)->fetchAll();
     if (sizeof($res) != 0) {
         return $res[0];
